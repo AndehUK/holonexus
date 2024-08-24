@@ -24,8 +24,8 @@ export const Navbar = () => {
       </Link>
       <div className="hidden items-center gap-x-4 sm:flex">
         <SignedOut>
-          <Link href="/login">
-            <Button className="rounded-2xl">Login</Button>
+          <Link href="/register">
+            <Button className="rounded-2xl">Get Started</Button>
           </Link>
         </SignedOut>
         <SignedIn>

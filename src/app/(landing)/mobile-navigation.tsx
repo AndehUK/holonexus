@@ -32,9 +32,9 @@ export function MobileNavigation() {
         <div className="mt-8 flex flex-col justify-center gap-4">
           <Button className="w-full rounded-lg">Home</Button>
           <SignedOut>
-            <Link href="/login">
+            <Link href="/register">
               <Button variant="outline" className="w-full rounded-lg">
-                Login
+                Get Started
               </Button>
             </Link>
           </SignedOut>
