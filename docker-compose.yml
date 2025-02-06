@@ -1,0 +1,53 @@
+services:
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+      args:
+        - DATABASE_URL=${DATABASE_URL}
+        - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - holonexus_network
+
+  #bot:
+  #  build:
+  #    context: ./apps/bot
+  #    dockerfile: Dockerfile
+  #  restart: unless-stopped
+  #  env_file:
+  #    - .env
+  #  depends_on:
+  #    db:
+  #      condition: service_healthy
+  #  networks:
+  #    - holonexus_network
+
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - holonexus_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U holonexus -d holonexus_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  holonexus_network:
+    driver: bridge
